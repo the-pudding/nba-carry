@@ -1,7 +1,7 @@
 <script>
-  import Demo from "$components/helpers/Demo.svelte";
+  import Table from "$components/Table.svelte";
   import Footer from "$components/Footer.svelte";
 </script>
 
-<Demo />
 <!-- <Footer /> -->
+<Table />
