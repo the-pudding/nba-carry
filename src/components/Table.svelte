@@ -1,4 +1,5 @@
 <script>
+  import { descending } from "d3";
   import ButtonSet from "$components/helpers/ButtonSet.svelte";
   import getData from "$utils/getData.js";
   import players from "$data/players.csv";
@@ -20,6 +21,7 @@
   const tablePropsArr = Object.keys(tableProps);
 
   $: topPlayers = getData({ players, metric });
+  $: topPlayers.sort((a, b) => descending(a.delta2, b.delta2));
 </script>
 
 <div>
