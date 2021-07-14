@@ -79,12 +79,22 @@
   }
 
   table {
-    max-width: 60em;
+    max-width: 50em;
     margin: 1em;
   }
 
   td:first-of-type,
   th:first-of-type {
     width: 3em;
+  }
+
+  td:nth-of-type(2),
+  th:nth-of-type(2) {
+    width: 13em;
+  }
+
+  td:nth-of-type(n + 4),
+  th:nth-of-type(n + 4) {
+    width: 5em;
   }
 </style>

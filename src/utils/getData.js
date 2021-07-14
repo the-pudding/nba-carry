@@ -19,7 +19,7 @@ export default function getData({ players, metric }) {
 
 		const mean5 = mean(others.slice(0, 4).map(d => d[metric]));
 		const delta5 = f(top[metric] - mean5);
-		const mate5 = others.slice(0, 4).map(d => d.player_name).join(", ");
+		const mate5 = others.slice(0, 4).map(d => d.player_name.split(" ")[1]).join(", ");
 
 
 		return {
