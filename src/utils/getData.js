@@ -15,20 +15,20 @@ export default function getData({ players, metric }) {
 
 	const withComps = byTeamSeason.map(({ top, others }) => {
 		const delta2 = f(top[metric] - others[0][metric]);
-		const player2 = others[0].player_name;
+		const mate2 = others[0].player_name;
 
-		const mean5 = mean(others.slice(4).map(d => d[metric]));
+		const mean5 = mean(others.slice(0, 4).map(d => d[metric]));
 		const delta5 = f(top[metric] - mean5);
-		const player5 = others.slice(4).map(d => d.player_name).join(",");
+		const mate5 = others.slice(0, 4).map(d => d.player_name).join(", ");
 
 
 		return {
 			...top,
 			others,
 			delta2,
-			player2,
+			mate2,
 			delta5,
-			player5,
+			mate5,
 		};
 	});
 
