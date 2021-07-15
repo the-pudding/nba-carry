@@ -36,11 +36,9 @@ video {
 }
 
 button,
-select,
 textarea,
 input[type="submit"],
 input[type="button"] {
-	appearance: none;
   background-color: var(--background-form);
   border: none;
   border-radius: 4px;
