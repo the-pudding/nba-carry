@@ -7,18 +7,19 @@
   const topPlayers = getData({ players, metric });
   const flatPlayers = [].concat(...topPlayers.map((d) => [d].concat(...d.others)));
 
-  const yProp = "pie5";
-  // const yProp = "share";
+  // const yProp = "pie5";
+  const yProp = "share";
 
   const xProp = "war";
-  const extentX = extent(topPlayers, (d) => d[xProp]);
-  const extentY = extent(topPlayers, (d) => d[yProp]);
-  // const extentX = extent(flatPlayers, (d) => d[xProp]);
-  // const extentY = extent(flatPlayers, (d) => d[yProp]);
+
+  // const extentX = extent(topPlayers, (d) => d[xProp]);
+  // const extentY = extent(topPlayers, (d) => d[yProp]);
+  const extentX = extent(flatPlayers, (d) => d[xProp]);
+  const extentY = extent(flatPlayers, (d) => d[yProp]);
 
   const sz = 480;
-  const x = scaleLinear().domain([0, extentX[1]]).range([0, 100]);
-  const y = scaleLinear().domain([0, extentY[1]]).range([100, 0]);
+  const x = scaleLinear().domain(extentX).range([0, 100]);
+  const y = scaleLinear().domain(extentY).range([100, 0]);
   const xTicks = x.ticks();
   const yTicks = y.ticks();
 
@@ -67,17 +68,19 @@
           <p>{p.player_name} ({p.team} {p.season})</p>
         </div>
 
-        <!-- {#each p.others as o, i}
-          <div
-            class="player other"
-            class:beta={i === 0}
-            class:visible={value === `${o.team} ${o.season}`}
-            style="left: {x(o[xProp])}%; top: {y(o[yProp])}%;"
-          >
-            <div class="dot" />
-            <p>{o.player_name} ({o.team} {o.season})</p>
-          </div>
-        {/each} -->
+        {#if yProp === "share"}
+          {#each p.others as o, i}
+            <div
+              class="player other"
+              class:beta={i === 0}
+              class:visible={value === `${o.team} ${o.season}`}
+              style="left: {x(o[xProp])}%; top: {y(o[yProp])}%;"
+            >
+              <div class="dot" />
+              <p>{o.player_name} ({o.team} {o.season})</p>
+            </div>
+          {/each}
+        {/if}
       {/each}
     </div>
   </div>
