@@ -18,6 +18,10 @@ export default function getData({ players, metric }) {
 		const delta2 = top[metric] - others[0][metric];
 		const mate2 = others[0].player_name;
 
+		const mean3 = mean(others.slice(0, 2).map(d => d[metric]));
+		const delta3 = top[metric] - mean3;
+		const mate3 = others.slice(0, 2).map(d => d.player_name.split(" ")[1]).join(", ");
+
 		const mean5 = mean(others.slice(0, 4).map(d => d[metric]));
 		const delta5 = top[metric] - mean5;
 		const mate5 = others.slice(0, 4).map(d => d.player_name.split(" ")[1]).join(", ");
@@ -31,16 +35,30 @@ export default function getData({ players, metric }) {
 		});
 
 		const share2 = share - others[0].share;
+		const share5 = share - mean(others.slice(0, 4).map(d => d.share));
+		const share3 = share - mean(others.slice(0, 2).map(d => d.share));
+
+
+		const pie2 = share / (share + others[0].share);
+		const pie5 = share / (share + sum(others.slice(0, 4).map(d => d.share)));
+		const pie3 = share / (share + sum(others.slice(0, 2).map(d => d.share)));
 
 		return {
 			...top,
 			total,
 			others,
-			delta2,
 			mate2,
-			delta5,
+			mate3,
 			mate5,
+			delta2,
+			delta3,
+			delta5,
 			share2,
+			share3,
+			share5,
+			pie2,
+			pie3,
+			pie5,
 		};
 	});
 

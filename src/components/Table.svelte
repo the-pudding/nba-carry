@@ -5,7 +5,7 @@
   import players from "$data/players.csv";
 
   let metric = "war";
-  let comp = "2";
+  let comp = "3";
 
   const f = (x) => format(".2f")(x);
 
@@ -16,23 +16,43 @@
 
   const compOptions = [
     { value: "2", label: "Next Best" },
+    { value: "3", label: "Top 3" },
     { value: "5", label: "Top 5" }
   ];
 
   const tableProps = {
     player_name: "Leader",
     mate2: "Next Best",
+    mate3: "Top 3",
     mate5: "Top 5",
     team: "Team",
     season: "Season",
     winner: "Champs",
     warposs: "WAR / 100 Poss",
-    delta2: "Margin",
-    delta5: "Margin",
-    share2: "Share Delta"
+    delta2: "Margin 2",
+    delta3: "Margin 3",
+    delta5: "Margin 5",
+    share2: "Share Delta 2",
+    share3: "Share Delta 3",
+    share5: "Share Delta 5",
+    pie2: "Pie 2",
+    pie3: "Pie 3",
+    pie5: "Pie 5"
   };
 
-  const numerical = ["delta2", "delta5", "share2", "total", "warposs"];
+  const numerical = [
+    "delta2",
+    "delta3",
+    "delta5",
+    "pie2",
+    "pie3",
+    "pie5",
+    "share2",
+    "share3",
+    "share5",
+    "total",
+    "warposs"
+  ];
 
   $: tablePropsArr = Object.keys(tableProps).filter((d) => {
     if (d.includes("delta")) return d === `delta${comp}`;
@@ -41,8 +61,7 @@
   });
 
   $: topPlayers = getData({ players, metric });
-  // $: topPlayers.sort((a, b) => descending(a[`delta${comp}`], b[`delta${comp}`]));
-  $: topPlayers.sort((a, b) => descending(a.warposs, b.warposs));
+  $: topPlayers.sort((a, b) => descending(a[`pie${comp}`], b[`pie${comp}`]));
 </script>
 
 <div>
@@ -87,8 +106,16 @@
   }
 
   table {
-    max-width: 60em;
+    max-width: 75em;
     margin: 1em;
+  }
+  thead {
+    position: sticky;
+    top: 0;
+  }
+
+  th {
+    background: white;
   }
 
   td:first-of-type,
