@@ -34,10 +34,7 @@ const config = {
 				dsv(),
 				svg()
 			]
-		},
-		paths: {
-			base: dev ? "" : "/nba-carry"
-		},
+		}
 	}
 };
 
