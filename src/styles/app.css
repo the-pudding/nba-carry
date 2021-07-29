@@ -17,8 +17,8 @@
 	--z-overlay: 1000;
 
 	/* presets */
-	--font-body: var(--sans);
-	--font-form: var(--sans);
+	--font-body: var(--mono);
+	--font-form: var(--mono);
 	--background-body: var(--base-white);
   --background-form: var(--base-off-white);
 	--color-body: var(--base-off-black);
@@ -28,4 +28,28 @@
 	--color-border: var(--base-gray-light);
 	--color-selection: var(--base-gray-light);
   --color-highlight: var(--base-yellow);
+}
+
+main {
+	width: 100%;
+	padding: 0 1em;
+	margin: 0 auto;
+	max-width: 30em;
+	font-size: 21px;
+}
+
+h1 {
+	line-height: 1.2;
+	font-weight: bold;
+}
+
+p {
+	line-height: 1.6;
+	margin: 1em 0;
+}
+
+@media only screen and (min-width: 640px) {
+	main {
+		font-size: 28px;
+	}
 }
