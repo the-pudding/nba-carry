@@ -5,6 +5,8 @@ import dsv from "@rollup/plugin-dsv";
 import sveltePreprocess from "svelte-preprocess";
 import autoprefixer from "autoprefixer";
 
+const dev = process.env.NODE_ENV === "development";
+
 const preprocess = sveltePreprocess({
 	postcss: {
 		plugins: [autoprefixer]
@@ -32,7 +34,10 @@ const config = {
 				dsv(),
 				svg()
 			]
-		}
+		},
+		paths: {
+			base: dev ? "" : "/nba-carry"
+		},
 	}
 };
 
