@@ -19,8 +19,8 @@
 
 @font-face {
 	font-family: 'Tiempos Text Web';
-	src: url('/assets/fonts/tiempos/TiemposTextWeb-Regular.woff2') format('woff2'),
-	url('/assets/fonts/tiempos/TiemposTextWeb-Regular.woff') format('woff');
+	src: url('assets/fonts/tiempos/TiemposTextWeb-Regular.woff2') format('woff2'),
+	url('assets/fonts/tiempos/TiemposTextWeb-Regular.woff') format('woff');
 	font-weight: 500;
 	font-style: normal;
 	font-stretch: normal;
@@ -29,8 +29,8 @@
 
 @font-face {
 	font-family: 'Tiempos Text Web';
-	src: url('/assets/fonts/tiempos/TiemposTextWeb-Bold.woff2') format('woff2'),
-	url('/assets/fonts/tiempos/TiemposTextWeb-Bold.woff') format('woff');
+	src: url('assets/fonts/tiempos/TiemposTextWeb-Bold.woff2') format('woff2'),
+	url('assets/fonts/tiempos/TiemposTextWeb-Bold.woff') format('woff');
 	font-weight: 700;
 	font-style: normal;
 	font-stretch: normal;
@@ -45,8 +45,8 @@
 
 @font-face {
 	font-family: 'Tiempos Headline Web';
-	src: url('/assets/fonts/tiempos/TiemposHeadlineWeb-Regular.woff2') format('woff2'),
-	url('/assets/fonts/tiempos/TiemposHeadlineWeb-Regular.woff') format('woff');
+	src: url('assets/fonts/tiempos/TiemposHeadlineWeb-Regular.woff2') format('woff2'),
+	url('assets/fonts/tiempos/TiemposHeadlineWeb-Regular.woff') format('woff');
 	font-weight: 500;
 	font-style: normal;
 	font-stretch: normal;
