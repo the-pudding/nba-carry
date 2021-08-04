@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 29 Mar 2021 15:26:24 GMT
+ * Generated on Wed, 04 Aug 2021 15:06:03 GMT
  */
 
 :root {
@@ -12,8 +12,9 @@
   --base-off-white: #f0f0f0;
   --base-white:  #fff;
   --base-purple:  #a239ca;
-  --base-blue:  #4717f6;
+  --base-blue:  #3f17cf;
   --base-green:  #34a29e;
+  --base-green-dark: #257471;
   --base-red:  #ff533d;
   --base-yellow:  #e5e338;
   --categorical-blue: #4477AA;

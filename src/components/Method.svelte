@@ -15,3 +15,18 @@
     <p class="result">Outcome: {result}</p>
   </div>
 {/each}
+
+<style>
+  h3 {
+    font-weight: bold;
+  }
+
+  .item {
+    border-bottom: 4px dashed var(--base-black);
+    padding-top: 1em;
+  }
+
+  .result {
+    font-weight: bold;
+  }
+</style>

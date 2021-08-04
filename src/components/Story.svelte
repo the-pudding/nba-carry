@@ -5,7 +5,9 @@
   import Method from "$components/Method.svelte";
 </script>
 
-<Intro />
+<section id="intro">
+  <Intro />
+</section>
 
 <section id="list">
   <List {copy} />
@@ -16,4 +18,9 @@
 </section>
 
 <style>
+  section {
+    width: 100%;
+    max-width: 26em;
+    margin: 0 auto;
+  }
 </style>

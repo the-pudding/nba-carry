@@ -2,12 +2,10 @@
   export let copy;
 </script>
 
-{#each copy.list as { id, text }, i}
-  <div class="item">
-    <p>{i + 1}. {text}</p>
-    <img src="https://via.placeholder.com/300x150" alt="tk" />
-  </div>
-{/each}
+<figure>
+  <img src="assets/images/{copy.listId}.jpg" alt={copy.listCaption} />
+  <figcaption>{copy.listCaption}</figcaption>
+</figure>
 
 <div class="prose">
   {#each copy.listPost as { value }}
@@ -16,6 +14,11 @@
 </div>
 
 <style>
+  figcaption {
+    font-size: 0.65em;
+    padding: 0.5em 0;
+  }
+
   img {
     display: block;
     width: 100%;

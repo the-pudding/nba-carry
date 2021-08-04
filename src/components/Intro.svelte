@@ -4,9 +4,10 @@
 
 <section id="intro">
   <h1 class="hed">{copy.hed}</h1>
-  <p class="dek">{copy.dek}</p>
+  <!-- <p class="dek">{copy.dek}</p> -->
   <p class="byline">
     By <a href="https://pudding.cool/author/russell-goldenberg">Russell Goldenberg</a>
+    <time>August 2021</time>
   </p>
 
   <div class="prose">
@@ -15,3 +16,9 @@
     {/each}
   </div>
 </section>
+
+<style>
+  time {
+    display: block;
+  }
+</style>

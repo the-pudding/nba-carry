@@ -25,10 +25,13 @@
 			"value": " #a239ca"
 		},
 		"blue": {
-			"value": " #4717f6"
+			"value": " #3f17cf"
 		},
 		"green": {
 			"value": " #34a29e"
+		},
+		"green-dark": {
+			"value": "#257471"
 		},
 		"red": {
 			"value": " #ff533d"

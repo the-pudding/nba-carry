@@ -1,6 +1,6 @@
 <script>
-  import Table from "$components/Table.svelte";
-  import Scatter from "$components/Scatter.svelte";
+  import Table from "$components/Exploration.Table.svelte";
+  import Scatter from "$components/Exploration.Scatter.svelte";
 </script>
 
 <div class="method">
@@ -16,6 +16,12 @@
 <style>
   .method {
     padding: 1em;
+    font-size: 16px;
+  }
+
+  .method p {
+    font-size: 16px;
+    margin: 1em 0;
   }
 
   ul {
