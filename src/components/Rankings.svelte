@@ -126,7 +126,6 @@
 
   td:nth-of-type(n + 4),
   th:nth-of-type(n + 4) {
-    width: 5em;
     text-align: right;
   }
 
