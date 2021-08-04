@@ -6,7 +6,7 @@
 		"style": "node tasks/style-dictionary.cjs",
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
-		"pre:build": "rm -rf build",
+		"prebuild": "rm -rf build",
 		"start": "svelte-kit start",
 		"lint": "prettier --check .",
 		"format": "prettier --write ."
