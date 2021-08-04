@@ -1,14 +1,21 @@
 <script>
-  import { format, descending } from "d3";
+  // import { format, descending } from "d3";
+  import { browser } from "$app/env";
+  import { onMount } from "svelte";
   import getData from "$utils/getData.js";
   import players from "$data/players.csv";
   import Icon from "$components/helpers/Icon.svelte";
 
+  let mounted;
+  let d3;
+  let f;
+  let tablePropsArr;
+  let topPlayers;
+  let curProp;
+
   let metric = "war";
   let comp = "3";
   let srt = "pie";
-
-  const f = (x) => format(".0%")(x);
 
   const tableProps = {
     player_name: "Leader",
@@ -33,47 +40,56 @@
     "warposs"
   ];
 
-  $: tablePropsArr = Object.keys(tableProps);
+  $: if (mounted) {
+    tablePropsArr = Object.keys(tableProps);
 
-  $: topPlayers = getData({ players, metric });
-  $: curProp = `${srt}${comp}`;
-  $: {
-    topPlayers.sort((a, b) => descending(a[curProp], b[curProp]));
+    topPlayers = getData({ d3, players, metric });
+    curProp = `${srt}${comp}`;
+    topPlayers.sort((a, b) => d3.descending(a[curProp], b[curProp]));
     topPlayers = topPlayers;
   }
+
+  onMount(async () => {
+    const module = await import("d3");
+    d3 = module;
+    f = (x) => d3.format(".0%")(x);
+    mounted = true;
+  });
 </script>
 
-<section id="rankings">
-  <h3>Every NBA finalist carry job, ranked</h3>
-  <table>
-    <thead>
-      <th>Rank</th>
-      {#each tablePropsArr as prop}
-        <th>{tableProps[prop]}</th>
-      {/each}
-    </thead>
-    <tbody>
-      {#each topPlayers as player, i}
-        <tr>
-          <td>{i + 1}</td>
-          {#each tablePropsArr as prop}
-            {#if prop === "winner"}
-              <td>
-                {#if player[prop] === "true"}
-                  <Icon name="check" />
-                {:else}
-                  <Icon name="x" />
-                {/if}
-              </td>
-            {:else}
-              <td>{numerical.includes(prop) ? f(player[prop]) : player[prop]}</td>
-            {/if}
-          {/each}
-        </tr>
-      {/each}
-    </tbody>
-  </table>
-</section>
+{#if mounted}
+  <section id="rankings">
+    <h3>Every NBA finalist carry job, ranked</h3>
+    <table>
+      <thead>
+        <th>Rank</th>
+        {#each tablePropsArr as prop}
+          <th>{tableProps[prop]}</th>
+        {/each}
+      </thead>
+      <tbody>
+        {#each topPlayers as player, i}
+          <tr>
+            <td>{i + 1}</td>
+            {#each tablePropsArr as prop}
+              {#if prop === "winner"}
+                <td>
+                  {#if player[prop] === "true"}
+                    <Icon name="check" />
+                  {:else}
+                    <Icon name="x" />
+                  {/if}
+                </td>
+              {:else}
+                <td>{numerical.includes(prop) ? f(player[prop]) : player[prop]}</td>
+              {/if}
+            {/each}
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </section>
+{/if}
 
 <style>
   h3 {

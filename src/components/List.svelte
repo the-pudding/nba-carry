@@ -23,8 +23,4 @@
     display: block;
     width: 100%;
   }
-
-  .item {
-    margin-bottom: 3em;
-  }
 </style>
