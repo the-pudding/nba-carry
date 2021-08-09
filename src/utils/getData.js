@@ -1,4 +1,4 @@
-// import { groups, descending, mean, sum } from "d3";
+import { groups, descending, mean, sum } from "d3";
 
 const MP_MIN = 150;
 
@@ -6,8 +6,8 @@ export default function getData({ d3, players, metric }) {
 	const clean = players.map(d => ({ ...d, [[metric]]: +d[metric], warposs: +d.war / +d.poss * 100 }))
 		.filter(d => +d.mp >= MP_MIN);
 
-	const byTeamSeason = d3.groups(clean, (d) => `${d.team}${d.season}`).map(([key, data]) => {
-		data.sort((a, b) => d3.descending(a[metric], b[metric]));
+	const byTeamSeason = groups(clean, (d) => `${d.team}${d.season}`).map(([key, data]) => {
+		data.sort((a, b) => descending(a[metric], b[metric]));
 		return {
 			top: data[0],
 			others: data.slice(1)
@@ -18,15 +18,15 @@ export default function getData({ d3, players, metric }) {
 		const delta2 = top[metric] - others[0][metric];
 		const mate2 = others[0].player_name.split(" ")[1];
 
-		const mean3 = d3.mean(others.slice(0, 2).map(d => d[metric]));
+		const mean3 = mean(others.slice(0, 2).map(d => d[metric]));
 		const delta3 = top[metric] - mean3;
 		const mate3 = others.slice(0, 2).map(d => d.player_name.split(" ")[1]).join(", ");
 
-		const mean5 = d3.mean(others.slice(0, 4).map(d => d[metric]));
+		const mean5 = mean(others.slice(0, 4).map(d => d[metric]));
 		const delta5 = top[metric] - mean5;
 		const mate5 = others.slice(0, 4).map(d => d.player_name.split(" ")[1]).join(", ");
 
-		const total = top[metric] + d3.sum(others.map(d => d[metric]));
+		const total = top[metric] + sum(others.map(d => d[metric]));
 		const share = top[metric] / total;
 		top.share = share;
 
@@ -35,13 +35,13 @@ export default function getData({ d3, players, metric }) {
 		});
 
 		const share2 = share - others[0].share;
-		const share5 = share - d3.mean(others.slice(0, 4).map(d => d.share));
-		const share3 = share - d3.mean(others.slice(0, 2).map(d => d.share));
+		const share5 = share - mean(others.slice(0, 4).map(d => d.share));
+		const share3 = share - mean(others.slice(0, 2).map(d => d.share));
 
 
 		const pie2 = share / (share + others[0].share);
-		const pie5 = share / (share + d3.sum(others.slice(0, 4).map(d => d.share)));
-		const pie3 = share / (share + d3.sum(others.slice(0, 2).map(d => d.share)));
+		const pie5 = share / (share + sum(others.slice(0, 4).map(d => d.share)));
+		const pie3 = share / (share + sum(others.slice(0, 2).map(d => d.share)));
 
 		return {
 			...top,

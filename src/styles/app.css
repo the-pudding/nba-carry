@@ -20,7 +20,7 @@
 	/* presets */
 	--font-body: var(--serif);
 	--font-form: var(--mono);
-	--background-body: var(--base-green);
+	--background-body: var(--base-white);
   --background-form: var(--base-white);
 	--color-body: var(--base-off-black);
 	--color-placeholder: var(--base-gray-dark);
@@ -36,7 +36,7 @@ main {
 	width: 100%;
 	padding: 0 1em;
 	margin: 0 auto;
-	font-size: 22px;
+	/* font-size: 22px; */
 }
 
 h1, h2, h3 {
@@ -57,7 +57,7 @@ p {
 img {
 	filter: grayscale(100%);
 }
-
+/* 
 @media only screen and (min-width: 640px) {
 	main {
 		font-size: 26px;
@@ -68,4 +68,4 @@ img {
 	main {
 		font-size: 30px;
 	}
-}
+} */
