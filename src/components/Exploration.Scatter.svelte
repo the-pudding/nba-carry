@@ -1,5 +1,5 @@
 <script>
-  import { extent, scaleLinear } from "d3";
+  // import { extent, scaleLinear } from "d3";
   import getData from "$utils/getData.js";
   import players from "$data/players.csv";
 
@@ -14,12 +14,12 @@
 
   // const extentX = extent(topPlayers, (d) => d[xProp]);
   // const extentY = extent(topPlayers, (d) => d[yProp]);
-  const extentX = extent(flatPlayers, (d) => d[xProp]);
-  const extentY = extent(flatPlayers, (d) => d[yProp]);
+  const extentX = d3.extent(flatPlayers, (d) => d[xProp]);
+  const extentY = d3.extent(flatPlayers, (d) => d[yProp]);
 
   const sz = 480;
-  const x = scaleLinear().domain(extentX).range([0, 100]);
-  const y = scaleLinear().domain(extentY).range([100, 0]);
+  const x = d3.scaleLinear().domain(extentX).range([0, 100]);
+  const y = d3.scaleLinear().domain(extentY).range([100, 0]);
   const xTicks = x.ticks();
   const yTicks = y.ticks();
 
