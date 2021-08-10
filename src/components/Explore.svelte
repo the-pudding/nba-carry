@@ -1,16 +1,12 @@
 <script>
-  // import { extent, scaleLinear } from "d3";
-  import getData from "$utils/getData.js";
-  import players from "$data/players.csv";
-
-  const metric = "war";
-  const topPlayers = getData({ players, metric });
-  const flatPlayers = [].concat(...topPlayers.map((d) => [d].concat(...d.others)));
+  import { getContext } from "svelte";
+  const { copy, teams } = getContext("App");
 
   // const yProp = "pie5";
-  const yProp = "share";
+  const yProp = "war";
+  const xProp = "mp";
 
-  const xProp = "war";
+  const flatPlayers = [].concat(...teams.map((d) => d.players));
 
   // const extentX = extent(topPlayers, (d) => d[xProp]);
   // const extentY = extent(topPlayers, (d) => d[yProp]);
@@ -18,73 +14,68 @@
   const extentY = d3.extent(flatPlayers, (d) => d[yProp]);
 
   const sz = 480;
-  const x = d3.scaleLinear().domain(extentX).range([0, 100]);
+  const x = d3.scaleLinear().domain([0, extentX[1]]).range([0, 100]);
   const y = d3.scaleLinear().domain(extentY).range([100, 0]);
   const xTicks = x.ticks();
   const yTicks = y.ticks();
 
-  let value;
+  let currentTeam;
 </script>
 
 <div class="info">
-  <h2>WAR Share Gap vs. Total WAR</h2>
-  <p>
-    WAR Share Gap = how much higher the leader's percent of whole team was vs. next highest player.
-    Total WAR is cumulative so more games/minutes will yield higher total.
-  </p>
+  <h2>{copy.exploreHed}</h2>
+  <p>{copy.exploreDek}</p>
 </div>
-<select bind:value>
-  {#each topPlayers as p}
-    <option>{p.team} {p.season}</option>
+<select bind:value={currentTeam}>
+  {#each teams as { team, season }}
+    <option>{team} {season}</option>
   {/each}
 </select>
-<figure>
-  <div class="chart" style="width: {sz}px; height: {sz}px;">
-    <div class="axis x">
-      {#each xTicks as tick}
-        <div class="tick" style="left: {x(tick)}%">
-          <p>{tick}</p>
-          <span />
-        </div>
-      {/each}
-    </div>
 
-    <div class="axis y">
-      {#each yTicks as tick}
-        <div class="tick" style="top: {y(tick)}%">
-          <p>{tick}</p>
-          <span />
-        </div>
-      {/each}
-    </div>
-    <div class="players">
-      {#each topPlayers as p}
-        <div
-          class="player alpha"
-          class:visible={value === `${p.team} ${p.season}`}
-          style="left: {x(p[xProp])}%; top: {y(p[yProp])}%;"
-        >
-          <div class="dot" />
-          <p>{p.player_name} ({p.team} {p.season})</p>
-        </div>
+<div class="graphic">
+  <div class="prose">
+    {#each copy.explore as { value }}
+      <p>{@html value}</p>
+    {/each}
+  </div>
+  <figure>
+    <div class="chart" style="width: {sz}px; height: {sz}px;">
+      <div class="axis x">
+        {#each xTicks as tick}
+          <div class="tick" style="left: {x(tick)}%">
+            <p>{tick}</p>
+            <span />
+          </div>
+        {/each}
+      </div>
 
-        {#if yProp === "share"}
-          {#each p.others as o, i}
+      <div class="axis y">
+        {#each yTicks as tick}
+          <div class="tick" style="top: {y(tick)}%">
+            <p>{tick}</p>
+            <span />
+          </div>
+        {/each}
+      </div>
+      <div class="players">
+        {#each teams as { players }}
+          {#each players as p, i}
             <div
-              class="player other"
-              class:beta={i === 0}
-              class:visible={value === `${o.team} ${o.season}`}
-              style="left: {x(o[xProp])}%; top: {y(o[yProp])}%;"
+              class="player"
+              class:alpha={i === 0}
+              class:beta={i > 0}
+              class:visible={currentTeam === `${p.team} ${p.season}`}
+              style="left: {x(p[xProp])}%; top: {y(p[yProp])}%;"
             >
               <div class="dot" />
-              <p>{o.player_name} ({o.team} {o.season})</p>
+              <p>{p.name} ({p.team} {p.season})</p>
             </div>
           {/each}
-        {/if}
-      {/each}
+        {/each}
+      </div>
     </div>
-  </div>
-</figure>
+  </figure>
+</div>
 
 <style>
   select {
@@ -96,6 +87,14 @@
     margin-left: 5em;
   }
 
+  .graphic {
+    display: flex;
+  }
+
+  .prose {
+    max-width: 20em;
+  }
+
   figure {
     margin-left: 5em;
     padding: 1em;
@@ -103,7 +102,7 @@
 
   .chart {
     position: relative;
-    background: var(--base-off-white);
+    /* background: var(--base-off-white); */
   }
 
   .player {
@@ -116,7 +115,6 @@
     background: var(--base-gray-light);
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid var(--base-gray-medium);
   }
 
   .player p {
@@ -133,10 +131,12 @@
 
   .visible {
     z-index: 1000;
+    display: block;
+    opacity: 1;
   }
 
   .visible .dot {
-    background: var(--base-red);
+    background: var(--base-black);
     width: 10px;
     height: 10px;
   }
@@ -150,7 +150,7 @@
   }
 
   .player:hover .dot {
-    background: var(--base-red);
+    background: var(--base-black);
   }
 
   .player:hover p {
@@ -191,7 +191,7 @@
 
   .axis span {
     position: absolute;
-    background: gray;
+    background: var(--base-black);
   }
 
   .axis.x span {

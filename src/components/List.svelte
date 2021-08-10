@@ -3,7 +3,7 @@
 </script>
 
 <figure>
-  <img src="assets/images/{copy.listId}.jpg" alt={copy.listCaption} />
+  <img src="assets/images/{copy.listId}.png" alt={copy.listCaption} />
   <figcaption>{copy.listCaption}</figcaption>
 </figure>
 

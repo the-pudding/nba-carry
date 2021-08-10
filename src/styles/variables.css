@@ -1,22 +1,21 @@
 /**
  * Do not edit directly
- * Generated on Wed, 04 Aug 2021 15:06:03 GMT
+ * Generated on Tue, 10 Aug 2021 16:11:41 GMT
  */
 
 :root {
   --base-black: #000000;
   --base-off-black: #282828;
   --base-gray-dark: #5b5b5b;
-  --base-gray-medium:  #949494;
+  --base-gray-medium: #949494;
   --base-gray-light: #c9c9c9;
   --base-off-white: #f0f0f0;
-  --base-white:  #fff;
-  --base-purple:  #a239ca;
-  --base-blue:  #3f17cf;
-  --base-green:  #34a29e;
-  --base-green-dark: #257471;
-  --base-red:  #ff533d;
-  --base-yellow:  #e5e338;
+  --base-white: #fff;
+  --base-purple: #a239ca;
+  --base-blue: #3f17cf;
+  --base-red: #ff533d;
+  --base-yellow: #e5e338;
+  --base-cream: #fffde5;
   --categorical-blue: #4477AA;
   --categorical-red: #EE6677;
   --categorical-green: #228833;

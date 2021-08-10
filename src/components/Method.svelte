@@ -1,32 +1,13 @@
 <script>
-  export let copy;
+  import { getContext } from "svelte";
+  const { copy } = getContext("App");
 </script>
 
-{#each copy.method as { decision, result, text }, i}
-  <div class="item">
-    <h3>
-      Decision {i + 1}: {decision}
-    </h3>
-
-    <div class="prose">
-      <p>{@html text}</p>
-    </div>
-
-    <p class="result">Outcome: {result}</p>
-  </div>
-{/each}
+<div>
+  {#each copy.method as { value }}
+    <p>{@html value}</p>
+  {/each}
+</div>
 
 <style>
-  h3 {
-    font-weight: bold;
-  }
-
-  .item {
-    border-bottom: 4px dashed var(--base-black);
-    padding-top: 1em;
-  }
-
-  .result {
-    font-weight: bold;
-  }
 </style>

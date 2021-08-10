@@ -4,6 +4,7 @@
 	"scripts": {
 		"gdoc": "node tasks/fetch-google.cjs",
 		"style": "node tasks/style-dictionary.cjs",
+		"prep": "node tasks/prepare-data.cjs",
 		"dev": "svelte-kit dev",
 		"build": "svelte-kit build",
 		"prebuild": "rm -rf build",

@@ -18,17 +18,17 @@
 	--z-overlay: 1000;
 
 	/* presets */
-	/* --font-body: var(--serif); */
-	/* --font-form: var(--serif); */
-	--background-body: var(--base-white);
+	--font-body: var(--serif);
+	--font-form: var(--serif);
+	--background-body: var(--base-cream);
   --background-form: var(--base-white);
 	--color-body: var(--base-off-black);
 	--color-placeholder: var(--base-gray-dark);
   --color-link: var(--base-off-black);
-  --color-focus: var(--base-yellow);
+  --color-focus: var(--base-purple);
 	--color-border: var(--base-gray-light);
-	--color-selection: var(--base-yellow);
-  --color-highlight: var(--base-yellow);
+	--color-selection: var(--base-purple);
+  --color-highlight: var(--base-purple);
 }
 
 
@@ -36,5 +36,41 @@ main {
 	width: 100%;
 	padding: 0 1em;
 	margin: 0 auto;
-	/* font-size: 22px; */
+	font-size: 22px;
+}
+
+h1, h2, h3 {
+	font-family: var(--serif-hed);
+}
+
+h1 {
+	line-height: 1.2;
+	font-weight: bold;
+	margin: 1em 0;
+}
+
+p {
+	line-height: 1.6;
+	margin: 2em 0;
+}
+
+img {
+	filter: grayscale(100%);
+	display: block;
+}
+
+figcaption {
+	font-size: 0.75em;
+}
+
+@media only screen and (min-width: 640px) {
+	main {
+		font-size: 26px;
+	}
+}
+
+@media only screen and (min-width: 1024px) {
+	main {
+		font-size: 30px;
+	}
 }

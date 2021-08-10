@@ -1,23 +1,33 @@
 <script>
-  import copy from "$data/doc.json";
+  import { getContext } from "svelte";
+  const { copy } = getContext("App");
 </script>
 
-<section id="intro">
-  <h1 class="hed">{copy.hed}</h1>
-  <!-- <p class="dek">{copy.dek}</p> -->
-  <p class="byline">
-    By <a href="https://pudding.cool/author/russell-goldenberg">Russell Goldenberg</a>
-    <time>August 2021</time>
-  </p>
+<h1 class="hed">{copy.hed}</h1>
+<!-- <p class="dek">{copy.dek}</p> -->
+<p class="byline">
+  By <a href="https://pudding.cool/author/russell-goldenberg">Russell Goldenberg</a>
+  <time>August 2021</time>
+</p>
 
-  <div class="prose">
-    {#each copy.intro as { value }}
+<div class="prose">
+  {#each copy.intro as { type, value }}
+    {#if type === "image"}
+      <figure>
+        <img src="assets/images/{value.id}.png" alt={value.caption} />
+        <figcaption>{value.caption}</figcaption>
+      </figure>
+    {:else}
       <p>{@html value}</p>
-    {/each}
-  </div>
-</section>
+    {/if}
+  {/each}
+</div>
 
 <style>
+  img {
+    width: 100%;
+  }
+
   time {
     display: block;
   }
