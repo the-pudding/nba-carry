@@ -18,8 +18,8 @@
 	--z-overlay: 1000;
 
 	/* presets */
-	/* --font-body: var(--serif); */
-	/* --font-form: var(--serif); */
+	--font-body: var(--serif);
+	--font-form: var(--serif);
 	--background-body: var(--base-white);
   --background-form: var(--base-white);
 	--color-body: var(--base-off-black);
@@ -32,9 +32,34 @@
 }
 
 
+
 main {
 	width: 100%;
 	padding: 0 1em;
 	margin: 0 auto;
-	/* font-size: 22px; */
+	font-size: 21px;
+}
+
+h1, h2, h3 {
+	font-family: var(--serif-hed);
+}
+
+h1 {
+	line-height: 1.2;
+	font-weight: bold;
+	margin: 1em 0;
+}
+
+p {
+	line-height: 1.6;
+	margin: 2em 0;
+}
+
+img {
+	filter: grayscale(100%);
+	display: block;
+}
+
+figcaption {
+	font-size: 0.75em;
 }

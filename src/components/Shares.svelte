@@ -44,7 +44,7 @@
       <div class="teams">
         {#each withShares as { team, season, players }}
           <div class="team">
-            <p>{team} {season}</p>
+            <!-- <p>{team} {season}</p> -->
             <div class="players">
               {#each players as p, i}
                 <div
@@ -53,7 +53,7 @@
                   class:beta={i > 0}
                   style="width: {p.share * 100}%;"
                 >
-                  <p class="name">{p.name}</p>
+                  <p class="name">{p.name} {(p.share * 100).toFixed(0)}%</p>
                 </div>
               {/each}
             </div>
@@ -70,26 +70,40 @@
     margin: 0 auto;
   }
 
+  .team {
+    margin-bottom: 1em;
+  }
+
   .players {
     display: flex;
   }
 
   .player {
-    height: 4em;
+    height: 3em;
     border: 3px solid var(--base-black);
     margin: 0 3px;
+    position: relative;
   }
 
-  p {
+  .name {
     font-weight: bold;
-    background: white;
+    background: var(--base-white);
+    color: var(--base-black);
+    border: 3px solid var(--base-black);
     display: inline-block;
-    padding: 0 0.5em;
-    margin-left: 0.5em;
+    position: absolute;
+    top: 50%;
+    left: 1em;
+    margin: 0;
+    line-height: 1;
+    padding: 0.25em;
+    font-size: 0.75em;
+    transform: translate(0, -50%);
+    /* margin-left: 0.5em; */
   }
 
   .player:nth-of-type(1) {
-    background: var(--base-gray-dark);
+    background: var(--base-black);
   }
 
   .player:nth-of-type(2) {
@@ -97,8 +111,8 @@
       45deg,
       transparent,
       transparent 3px,
-      var(--base-gray-dark) 3px,
-      var(--base-gray-dark) 12px
+      var(--base-black) 3px,
+      var(--base-black) 12px
     );
   }
 
@@ -107,8 +121,8 @@
       45deg,
       transparent,
       transparent 6px,
-      var(--base-gray-dark) 6px,
-      var(--base-gray-dark) 9px
+      var(--base-black) 6px,
+      var(--base-black) 9px
     );
   }
 </style>

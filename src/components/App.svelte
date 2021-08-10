@@ -38,7 +38,14 @@
 <style>
   section {
     width: 100%;
-    /* max-width: 3em; */
     margin: 0 auto;
+  }
+
+  #intro {
+    max-width: 30em;
+  }
+
+  #explore {
+    max-width: 60em;
   }
 </style>

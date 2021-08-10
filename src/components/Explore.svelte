@@ -1,6 +1,7 @@
 <script>
   import { getContext } from "svelte";
   const { copy, teams } = getContext("App");
+  import viewport from "$stores/viewport.js";
 
   // const yProp = "pie5";
   const yProp = "war";
@@ -13,11 +14,11 @@
   const extentX = d3.extent(flatPlayers, (d) => d[xProp]);
   const extentY = d3.extent(flatPlayers, (d) => d[yProp]);
 
-  const sz = 480;
-  const x = d3.scaleLinear().domain([0, extentX[1]]).range([0, 100]);
-  const y = d3.scaleLinear().domain(extentY).range([100, 0]);
-  const xTicks = x.ticks();
-  const yTicks = y.ticks();
+  $: sz = Math.floor($viewport.height * 0.75);
+  $: x = d3.scaleLinear().domain([0, extentX[1]]).range([0, 100]);
+  $: y = d3.scaleLinear().domain(extentY).range([100, 0]);
+  $: xTicks = x.ticks();
+  $: yTicks = y.ticks();
 
   let currentTeam;
 </script>
@@ -89,20 +90,24 @@
 
   .graphic {
     display: flex;
+    justify-content: center;
   }
 
   .prose {
     max-width: 20em;
+    width: 100%;
+    flex: 1;
+    padding: 1em;
   }
 
   figure {
-    margin-left: 5em;
+    flex: 1;
     padding: 1em;
   }
 
   .chart {
     position: relative;
-    /* background: var(--base-off-white); */
+    margin: 0 auto;
   }
 
   .player {
