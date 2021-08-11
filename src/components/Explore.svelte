@@ -3,7 +3,7 @@
   const { copy, teams } = getContext("App");
   import viewport from "$stores/viewport.js";
 
-  // const yProp = "pie5";
+  let figureW = 0;
   const yProp = "war";
   const xProp = "mp";
 
@@ -14,7 +14,7 @@
   const extentX = d3.extent(flatPlayers, (d) => d[xProp]);
   const extentY = d3.extent(flatPlayers, (d) => d[yProp]);
 
-  $: sz = Math.floor($viewport.height * 0.75);
+  $: sz = Math.min(figureW, $viewport.height) * 0.8;
   $: x = d3.scaleLinear().domain([0, extentX[1]]).range([0, 100]);
   $: y = d3.scaleLinear().domain(extentY).range([100, 0]);
   $: xTicks = x.ticks();
@@ -23,10 +23,10 @@
   let currentTeam;
 </script>
 
-<div class="info">
+<!-- <div class="info">
   <h2>{copy.exploreHed}</h2>
   <p>{copy.exploreDek}</p>
-</div>
+</div> -->
 <select bind:value={currentTeam}>
   {#each teams as { team, season }}
     <option>{team} {season}</option>
@@ -39,7 +39,7 @@
       <p>{@html value}</p>
     {/each}
   </div>
-  <figure>
+  <figure bind:clientWidth={figureW}>
     <div class="chart" style="width: {sz}px; height: {sz}px;">
       <div class="axis x">
         {#each xTicks as tick}
@@ -80,12 +80,9 @@
 
 <style>
   select {
-    margin-left: 5em;
   }
 
   .info {
-    max-width: 480px;
-    margin-left: 5em;
   }
 
   .graphic {
@@ -94,7 +91,8 @@
   }
 
   .prose {
-    max-width: 20em;
+    /* max-width: 20em; */
+    max-width: 25em;
     width: 100%;
     flex: 1;
     padding: 1em;
@@ -103,6 +101,7 @@
   figure {
     flex: 1;
     padding: 1em;
+    font-family: var(--mono);
   }
 
   .chart {
@@ -227,5 +226,11 @@
   .axis.y .tick p {
     padding-right: 12px;
     text-align: right;
+  }
+
+  :global(.prose button) {
+    padding: 0;
+    background: var(--base-black);
+    color: var(--base-white);
   }
 </style>

@@ -18,8 +18,8 @@
 	--z-overlay: 1000;
 
 	/* presets */
-	--font-body: var(--serif);
-	--font-form: var(--serif);
+	--font-body: var(--mono);
+	--font-form: var(--mono);
 	--background-body: var(--base-white);
   --background-form: var(--base-white);
 	--color-body: var(--base-off-black);
@@ -37,11 +37,11 @@ main {
 	width: 100%;
 	padding: 0 1em;
 	margin: 0 auto;
-	font-size: 21px;
+	font-size: 18px;
 }
 
 h1, h2, h3 {
-	font-family: var(--serif-hed);
+	font-family: var(--mono);
 }
 
 h1 {
@@ -62,4 +62,10 @@ img {
 
 figcaption {
 	font-size: 0.75em;
+}
+
+.prose {
+	width: 100%;
+	max-width: 40em;
+	margin: 0 auto;
 }

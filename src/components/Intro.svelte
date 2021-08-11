@@ -3,7 +3,7 @@
   const { copy } = getContext("App");
 </script>
 
-<h1 class="hed">{copy.hed}</h1>
+<h1 class="hed">{copy.title}</h1>
 <!-- <p class="dek">{copy.dek}</p> -->
 <p class="byline">
   By <a href="https://pudding.cool/author/russell-goldenberg">Russell Goldenberg</a>
