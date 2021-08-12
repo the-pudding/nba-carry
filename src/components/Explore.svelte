@@ -1,6 +1,7 @@
 <script>
-  import { onMount, getContext } from "svelte";
+  import { onMount, getContext, tick } from "svelte";
   import viewport from "$stores/viewport.js";
+  import intersects from "$utils/intersects.js";
   import Range from "$components/helpers/Range.svelte";
   import ButtonSet from "$components/helpers/ButtonSet.svelte";
   const { copy, teams } = getContext("App");
@@ -17,6 +18,30 @@
   const extentX = d3.extent(flatPlayers, (d) => d[xProp]);
   const extentY = d3.extent(flatPlayers, (d) => d[yProp]);
 
+  const isOverlapping = (nodes) => {
+    const root = nodes[0];
+    const { top, left, right, bottom } = root.getBoundingClientRect();
+    const a = [left, top, right, bottom];
+    const matches = nodes.slice(1).find((node) => {
+      const r = node.getBoundingClientRect();
+      const b = [r.left, r.top, r.right, r.bottom];
+      return intersects(a, b);
+    });
+
+    return !!matches;
+  };
+
+  const labelOverlap = async () => {
+    await tick();
+    const players = [...graphicEl.querySelectorAll(".player.visible .name")];
+    players.reverse();
+    players.forEach((el, i) => {
+      const order = players.length - i - 1;
+      const overlap = isOverlapping(players.slice(i));
+      if (overlap) el.classList.add("overlap");
+    });
+  };
+
   $: sz = Math.min(figureW, $viewport.height) * 0.8;
   $: x = d3.scaleLinear().domain([0, extentX[1]]).range([0, 100]);
   $: y = d3.scaleLinear().domain(extentY).range([100, 0]);
@@ -24,6 +49,7 @@
   $: yTicks = y.ticks();
   $: extentYears = d3.extent(teams, (d) => d.season);
   $: activeTeam = teams.find((d) => d.season === figureYear && d.place === figurePlace) || {};
+  $: activeTeam, labelOverlap();
 
   const handleTeamClick = (e) => {
     const { ts } = e.target.dataset;
@@ -150,7 +176,6 @@
     font-size: var(--fs);
     background-color: var(--color-highlight);
     padding: 0.25em;
-    /* transform: translate(0, 50%); */
   }
 
   .display-team p {
@@ -162,10 +187,12 @@
   .chart {
     position: relative;
     margin: 2em auto;
+    cursor: crosshair;
   }
 
   .player {
     position: absolute;
+    user-select: none;
   }
 
   .dot {
@@ -182,10 +209,15 @@
     font-size: var(--fs);
     top: 0;
     left: 50%;
-    transform: translate(-50%, -125%);
+    transform: translate(-50%, -150%);
     white-space: nowrap;
-    text-shadow: -1px -1px 1px white, 1px 1px 1px white, 1px -1px 1px white, -1px 1px 1px white;
+    /* text-shadow: -1px -1px 1px white, 1px 1px 1px white, 1px -1px 1px white, -1px 1px 1px white; */
     display: none;
+    pointer-events: none;
+    background: var(--base-green);
+    padding: 0.25em;
+    line-height: 1;
+    border: 2px solid var(--base-white);
   }
 
   .visible {
@@ -205,17 +237,22 @@
     display: block;
   }
 
-  /* .player:hover {
+  :global(.visible .name.overlap) {
+    opacity: 0;
+  }
+
+  .player.visible:hover {
     z-index: 1000;
   }
 
-  .player:hover .dot {
+  .player.visible:hover .dot {
     background: var(--base-black);
   }
 
-  .player:hover p {
+  .player.visible:hover p {
     display: block;
-  } */
+    opacity: 1;
+  }
 
   .axis {
     position: absolute;
