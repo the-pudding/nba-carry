@@ -27,15 +27,7 @@
       d3.descending(a.players[0].share, b.players[0].share) ||
       d3.descending(a.players[1].share, b.players[1].share)
   );
-
-  // const flatPlayers = [].concat(...players.map((d) => [d].concat(...d.others)));
 </script>
-
-<!-- 
-<div class="info">
-  <h2>{copy.sharesHed}</h2>
-  <p>{copy.sharesDek}</p>
-</div> -->
 
 <div class="graphic">
   <div class="prose">
@@ -49,9 +41,9 @@
         <div class="gridline" style="left: {g}%;" />
       {/each}
       <div class="teams">
-        {#each data as { teamName, season, players, annotation }, rank}
+        {#each data as { teamName, season, players, annotation, place }, rank}
           <div class="team" class:top={players[0].share >= 0.5}>
-            <p class="ts">{season} {teamName}</p>
+            <p class="ts">{season} {teamName} {place === "winner" ? "🏆" : ""}</p>
             <div class="players">
               {#each players as p, i}
                 <div
@@ -116,8 +108,9 @@
 
   .ts {
     margin: 0;
-    font-size: 12px;
+    font-size: 14px;
     padding: 0 0.5em;
+    color: var(--base-gray-dark);
   }
 
   .annotation {
