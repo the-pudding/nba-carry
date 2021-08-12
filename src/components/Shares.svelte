@@ -4,7 +4,7 @@
 
   const mates = 3;
   const grids = d3.range(mates - 1).map((d) => ((d + 1) / mates) * 100);
-  $: withShares = teams.map((t) => {
+  $: data = teams.map((t) => {
     const slice = t.players.slice(0, mates);
     const total = d3.sum(slice, (p) => p.war);
 
@@ -14,13 +14,15 @@
     }));
 
     players.sort((a, b) => d3.descending(a.share, b.share));
+    const annotation = copy.annotations.find((d) => d.ts === t.ts) || {};
 
     return {
       ...t,
+      annotation: annotation.text,
       players
     };
   });
-  $: withShares.sort(
+  $: data.sort(
     (a, b) =>
       d3.descending(a.players[0].share, b.players[0].share) ||
       d3.descending(a.players[1].share, b.players[1].share)
@@ -47,8 +49,8 @@
         <div class="gridline" style="left: {g}%;" />
       {/each}
       <div class="teams">
-        {#each withShares as { teamName, season, players }, rank}
-          <div class="team">
+        {#each data as { teamName, season, players, annotation }, rank}
+          <div class="team" class:top={players[0].share >= 0.5}>
             <p class="ts">{season} {teamName}</p>
             <div class="players">
               {#each players as p, i}
@@ -70,6 +72,11 @@
                 </div>
               {/each}
             </div>
+            {#if annotation}
+              <div class="annotation">
+                <p>{annotation}</p>
+              </div>
+            {/if}
           </div>
         {/each}
       </div>
@@ -79,7 +86,7 @@
 
 <style>
   figure {
-    max-width: 60em;
+    max-width: 55em;
     margin: 0 auto;
     font-family: var(--mono);
   }
@@ -95,7 +102,6 @@
     border-right: 2px dashed var(--base-gray-medium);
     transform: translate(-1px, 0);
     height: 100%;
-    /* z-index: var(--z-top); */
   }
 
   .team {
@@ -103,14 +109,25 @@
     position: relative;
   }
 
+  .team.top .player {
+    height: 4em;
+    font-size: 1em;
+  }
+
   .ts {
-    /* position: absolute; */
-    /* top: 0;
-    left: 0; */
     margin: 0;
-    /* transform: translate(-75%, 150%) rotate(-90deg); */
     font-size: 12px;
     padding: 0 0.5em;
+  }
+
+  .annotation {
+    max-width: 15em;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-100%, -0.5em);
+    margin: 0;
   }
 
   .players {
@@ -118,10 +135,11 @@
   }
 
   .player {
-    height: 3em;
+    height: 2em;
     border: 3px solid var(--base-black);
     margin: 0 3px;
     position: relative;
+    font-size: 0.8em;
   }
 
   .name {
