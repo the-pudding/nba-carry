@@ -1,5 +1,4 @@
 <script>
-  import { range, format } from "d3";
   export let min = 0;
   export let max = 100;
   export let step = 1;
@@ -12,13 +11,13 @@
   };
 
   $: decimals = getDecimalCount(step);
-  $: ticks = showTicks ? range(min, max + step, 1) : [];
+  $: ticks = showTicks ? d3.range(min, max + step, 1) : [];
 </script>
 
 <div class="range">
   <div class="ticks">
     {#each ticks as tick}
-      <span class="tick">{format(`.${decimals}f`)(tick)}</span>
+      <span class="tick">{tick}</span>
     {/each}
   </div>
   <input type="range" {min} {max} {step} bind:value />
