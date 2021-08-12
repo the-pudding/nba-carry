@@ -43,9 +43,9 @@
   <figure>
     <div class="chart">
       <div class="teams">
-        {#each withShares as { team, season, players }, rank}
+        {#each withShares as { teamName, season, players }, rank}
           <div class="team">
-            <p class="ts">{team} {season}</p>
+            <p class="ts">{season} {teamName}</p>
             <div class="players">
               {#each players as p, i}
                 <div
@@ -88,7 +88,7 @@
     left: 0; */
     margin: 0;
     /* transform: translate(-75%, 150%) rotate(-90deg); */
-    font-size: 0.5em;
+    font-size: 12px;
     padding: 0 0.5em;
   }
 
@@ -104,25 +104,24 @@
   }
 
   .name {
-    font-weight: bold;
-    background: var(--base-white);
-    color: var(--base-black);
-    /* border: 3px solid var(--base-black); */
+    color: var(--base-white);
     display: inline-block;
     position: absolute;
     top: 50%;
     left: 1em;
     margin: 0;
     line-height: 1;
-    padding: 0.25em;
-    font-size: 0.75em;
+    font-size: 1em;
     transform: translate(0, -50%);
-    /* margin-left: 0.5em; */
+  }
+
+  .name span:last-of-type {
+    display: inline-block;
+    color: var(--base-gray-light);
   }
 
   .player.beta .name {
-    font-size: 0.65em;
-    font-weight: bold;
+    font-size: 12px;
   }
 
   .player.beta span:last-of-type {
@@ -153,5 +152,9 @@
       var(--base-black) 6px,
       var(--base-black) 9px
     ); */
+  }
+
+  .player:nth-of-type(3) .name {
+    color: var(--base-black);
   }
 </style>

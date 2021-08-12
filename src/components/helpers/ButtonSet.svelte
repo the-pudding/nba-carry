@@ -77,8 +77,8 @@
     user-select: none;
     line-height: 1;
     margin: 0;
-    padding: 0.5em;
-    border-radius: 0;
+    padding: var(--padding);
+    border-radius: var(--border-radius);
     border: 2px solid var(--base-off-black);
     outline: none;
     cursor: pointer;
@@ -92,11 +92,11 @@
   }
 
   .option:first-of-type label {
-    border-radius: 4px 0 0 4px;
+    border-radius: var(--radius) 0 0 var(--radius);
   }
 
   .option:last-of-type label {
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 var(--radius) var(--radius) 0;
   }
 
   .option + .option > label {
@@ -119,7 +119,7 @@
   }
 
   input[type="radio"]:focus + label {
-    box-shadow: 0 0 4px 0 var(--color-focus);
+    box-shadow: 0 0 var(--radius) 0 var(--color-focus);
   }
 
   input[type="radio"]:disabled + label {

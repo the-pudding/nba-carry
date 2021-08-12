@@ -31,4 +31,9 @@
   time {
     display: block;
   }
+
+  :global(mark) {
+    font-style: italic;
+    background-color: var(--base-gray-light);
+  }
 </style>

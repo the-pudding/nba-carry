@@ -21,14 +21,18 @@
 	--font-body: var(--mono);
 	--font-form: var(--mono);
 	--background-body: var(--base-white);
-  --background-form: var(--base-white);
+  --background-form: var(--base-off-black);
 	--color-body: var(--base-off-black);
 	--color-placeholder: var(--base-gray-dark);
   --color-link: var(--base-off-black);
+	--color-form: var(--base-white);
   --color-focus: var(--base-yellow);
 	--color-border: var(--base-gray-light);
 	--color-selection: var(--base-yellow);
   --color-highlight: var(--base-yellow);
+
+	--border-radius: 0;
+	--padding: 0.25em;
 }
 
 
@@ -66,6 +70,6 @@ figcaption {
 
 .prose {
 	width: 100%;
-	max-width: 40em;
+	max-width: 30em;
 	margin: 0 auto;
 }

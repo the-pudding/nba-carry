@@ -12,7 +12,7 @@
   };
 
   $: decimals = getDecimalCount(step);
-  $: ticks = showTicks ? range(min, max + step, step) : [];
+  $: ticks = showTicks ? range(min, max + step, 1) : [];
 </script>
 
 <div class="range">
@@ -29,7 +29,8 @@
     --thumb-width: 24px;
     --tick-font-size: 12px;
     position: relative;
-    margin-bottom: calc(var(--thumb-width) * 2);
+    margin-bottom: var(--thumb-width);
+    margin-top: calc(var(--thumb-width) / 2 - 4px);
   }
 
   input[type="range"] {
@@ -58,7 +59,7 @@
     width: 100%;
     height: calc(var(--thumb-width) / 4);
     background: var(--base-gray-light);
-    border-radius: 4px;
+    border-radius: var(--radius);
   }
 
   input[type="range"]::-webkit-slider-thumb {
@@ -78,7 +79,7 @@
     width: 100%;
     height: calc(var(--thumb-width) / 4);
     background: var(--base-gray-light);
-    border-radius: 4px;
+    border-radius: var(--radius);
   }
 
   input[type="range"]::-moz-range-thumb {
@@ -102,7 +103,7 @@
   input[type="range"]::-ms-fill-upper {
     background: var(--base-gray-light);
     border: 0.2px solid #010101;
-    border-radius: 4px;
+    border-radius: var(--radius);
     box-shadow: 1px 1px 1px #000, 0 0 1px #0d0d0d;
   }
 
@@ -142,6 +143,7 @@
     color: var(--base-gray);
     padding-top: calc(var(--thumb-width) / 2);
     position: relative;
+    opacity: 0;
   }
 
   .tick:before {
@@ -157,9 +159,11 @@
 
   .tick:first-of-type {
     transform: translate(-1px, 0);
+    opacity: 1;
   }
 
   .tick:last-of-type {
     transform: translate(1px, 0);
+    opacity: 1;
   }
 </style>

@@ -1,16 +1,19 @@
 <script>
-  import { getContext } from "svelte";
-  const { copy, teams } = getContext("App");
+  import { onMount, getContext } from "svelte";
   import viewport from "$stores/viewport.js";
+  import Range from "$components/helpers/Range.svelte";
+  import ButtonSet from "$components/helpers/ButtonSet.svelte";
+  const { copy, teams } = getContext("App");
 
+  let graphicEl;
+  let figureYear;
+  let figurePlace;
   let figureW = 0;
   const yProp = "war";
   const xProp = "mp";
 
   const flatPlayers = [].concat(...teams.map((d) => d.players));
 
-  // const extentX = extent(topPlayers, (d) => d[xProp]);
-  // const extentY = extent(topPlayers, (d) => d[yProp]);
   const extentX = d3.extent(flatPlayers, (d) => d[xProp]);
   const extentY = d3.extent(flatPlayers, (d) => d[yProp]);
 
@@ -19,28 +22,51 @@
   $: y = d3.scaleLinear().domain(extentY).range([100, 0]);
   $: xTicks = x.ticks();
   $: yTicks = y.ticks();
+  $: extentYears = d3.extent(teams, (d) => d.season);
+  $: activeTeam = teams.find((d) => d.season === figureYear && d.place === figurePlace) || {};
 
-  let currentTeam;
+  const handleTeamClick = (e) => {
+    const { ts } = e.target.dataset;
+    const [t, s] = ts.split("-");
+    const team = t;
+    const season = +s;
+    figureYear = season;
+    figurePlace = teams.find((d) => d.season === season && d.team === team).place;
+  };
+
+  onMount(() => {
+    graphicEl.querySelectorAll(".prose button").forEach((el) => {
+      el.addEventListener("click", handleTeamClick);
+    });
+  });
 </script>
 
-<!-- <div class="info">
-  <h2>{copy.exploreHed}</h2>
-  <p>{copy.exploreDek}</p>
-</div> -->
-<select bind:value={currentTeam}>
-  {#each teams as { team, season }}
-    <option>{team} {season}</option>
-  {/each}
-</select>
-
-<div class="graphic">
+<div class="graphic" bind:this={graphicEl}>
   <div class="prose">
     {#each copy.explore as { value }}
       <p>{@html value}</p>
     {/each}
   </div>
   <figure bind:clientWidth={figureW}>
+    <div class="ui">
+      <div class="range">
+        <Range
+          min={extentYears[0]}
+          max={extentYears[1]}
+          showTicks={true}
+          step={1}
+          bind:value={figureYear}
+        />
+      </div>
+      <div class="buttonset">
+        <ButtonSet options={[{ value: "winner" }, { value: "loser" }]} bind:value={figurePlace} />
+      </div>
+    </div>
     <div class="chart" style="width: {sz}px; height: {sz}px;">
+      <div class="display-team">
+        <p>{activeTeam.season} {activeTeam.teamName}</p>
+      </div>
+
       <div class="axis x">
         {#each xTicks as tick}
           <div class="tick" style="left: {x(tick)}%">
@@ -65,11 +91,11 @@
               class="player"
               class:alpha={i === 0}
               class:beta={i > 0}
-              class:visible={currentTeam === `${p.team} ${p.season}`}
+              class:visible={activeTeam.ts === p.ts}
               style="left: {x(p[xProp])}%; top: {y(p[yProp])}%;"
             >
               <div class="dot" />
-              <p>{p.name} ({p.team} {p.season})</p>
+              <p class="name">{p.name}</p>
             </div>
           {/each}
         {/each}
@@ -79,19 +105,13 @@
 </div>
 
 <style>
-  select {
-  }
-
-  .info {
-  }
-
   .graphic {
     display: flex;
     justify-content: center;
+    --fs: 0.75em;
   }
 
   .prose {
-    /* max-width: 20em; */
     max-width: 25em;
     width: 100%;
     flex: 1;
@@ -104,9 +124,44 @@
     font-family: var(--mono);
   }
 
+  .ui {
+    padding: 0 1.5em;
+    display: flex;
+    align-items: center;
+  }
+
+  .range {
+    flex: 1;
+    margin-right: 2em;
+  }
+
+  .range:before {
+    content: "Season";
+    display: block;
+    font-size: var(--fs);
+    text-align: center;
+  }
+
+  .display-team {
+    position: absolute;
+    max-width: 20em;
+    top: 2em;
+    left: 3em;
+    font-size: var(--fs);
+    background-color: var(--base-gray-light);
+    padding: 0.25em;
+    /* transform: translate(0, 50%); */
+  }
+
+  .display-team p {
+    margin: 0;
+    text-align: center;
+    line-height: 1.2;
+  }
+
   .chart {
     position: relative;
-    margin: 0 auto;
+    margin: 2em auto;
   }
 
   .player {
@@ -114,20 +169,20 @@
   }
 
   .dot {
-    width: 10px;
-    height: 10px;
+    width: 0.25em;
+    height: 0.25em;
     background: var(--base-gray-light);
     border-radius: 50%;
     transform: translate(-50%, -50%);
   }
 
-  .player p {
+  .name {
     position: absolute;
     margin: 0;
-    font-size: 12px;
+    font-size: var(--fs);
     top: 0;
     left: 50%;
-    transform: translate(-50%, -150%);
+    transform: translate(-50%, -125%);
     white-space: nowrap;
     text-shadow: -1px -1px 1px white, 1px 1px 1px white, 1px -1px 1px white, -1px 1px 1px white;
     display: none;
@@ -141,8 +196,9 @@
 
   .visible .dot {
     background: var(--base-black);
-    width: 10px;
-    height: 10px;
+    width: 0.75em;
+    height: 0.75em;
+    border: 2px solid var(--base-white);
   }
 
   .visible p {
@@ -166,6 +222,7 @@
     left: 0;
     top: 0;
     z-index: var(--z-top);
+    color: var(--base-gray-dark);
   }
 
   .axis.x {
@@ -174,8 +231,33 @@
     width: 100%;
   }
 
+  .axis.x:before {
+    content: "Minutes Played";
+    display: block;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    transform: translate(0, 150%);
+    font-size: 12px;
+  }
+
   .axis.y {
     height: 100%;
+  }
+
+  .axis.y:before {
+    content: "RAPTOR WAR";
+    display: block;
+    text-align: center;
+    position: absolute;
+    white-space: nowrap;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: rotate(-90deg) translate(0, -225%);
+    font-size: 12px;
   }
 
   .axis .tick {
@@ -195,7 +277,7 @@
 
   .axis span {
     position: absolute;
-    background: var(--base-black);
+    background: var(--base-gray-medium);
   }
 
   .axis.x span {
@@ -219,6 +301,10 @@
     line-height: 1;
   }
 
+  .axis .tick:first-of-type {
+    display: none;
+  }
+
   .axis.x .tick p {
     padding-top: 8px;
   }
@@ -229,8 +315,6 @@
   }
 
   :global(.prose button) {
-    padding: 0;
-    background: var(--base-black);
-    color: var(--base-white);
+    /* padding: 0; */
   }
 </style>

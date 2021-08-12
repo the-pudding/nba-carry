@@ -1,9 +1,8 @@
 <script>
   import { setContext } from "svelte";
   import { browser } from "$app/env";
-  import copy from "$data/doc.json";
-  import playersRaw from "$data/players.csv";
-  import cleanData from "$utils/cleanData.js";
+
+  import Meta from "$components/Meta.svelte";
   import Prompt from "$components/Prompt.svelte";
   import Intro from "$components/Intro.svelte";
   import Explore from "$components/Explore.svelte";
@@ -11,14 +10,15 @@
   import Method from "$components/Method.svelte";
   import Footer from "$components/Footer.svelte";
 
+  import copy from "$data/doc.json";
+  import playersRaw from "$data/players.csv";
+  import cleanData from "$utils/cleanData.js";
+
   const teams = cleanData(playersRaw);
   setContext("App", { copy, teams });
 </script>
 
-<!-- <section id="prompt">
-  {#if browser}<Prompt />{/if}
-</section> -->
-
+<Meta title={copy.title} description={copy.description} url={copy.url} />
 <section id="intro">
   <Intro />
 </section>
