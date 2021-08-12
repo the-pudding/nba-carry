@@ -8,6 +8,7 @@
   import Explore from "$components/Explore.svelte";
   import Shares from "$components/Shares.svelte";
   import Method from "$components/Method.svelte";
+  import Outro from "$components/Outro.svelte";
   import Footer from "$components/Footer.svelte";
 
   import copy from "$data/doc.json";
@@ -31,9 +32,15 @@
   {#if browser}<Shares />{/if}
 </section>
 
+<section id="outro">
+  <Outro />
+</section>
+
 <section id="method">
   <Method />
 </section>
+
+<Footer />
 
 <style>
   section {
@@ -41,7 +48,9 @@
     margin: 0 auto;
   }
 
-  #intro {
+  #intro,
+  #outro,
+  #method {
     max-width: 30em;
   }
 
