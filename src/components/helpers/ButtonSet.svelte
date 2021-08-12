@@ -83,7 +83,8 @@
     outline: none;
     cursor: pointer;
     font-family: inherit;
-    font-size: 1em;
+    font-size: 0.8em;
+    text-transform: capitalize;
     display: inline-block;
   }
 
@@ -115,7 +116,7 @@
   }
 
   input[type="radio"]:hover + label {
-    background: var(--base-off-white);
+    background: var(--base-gray-light);
   }
 
   input[type="radio"]:focus + label {

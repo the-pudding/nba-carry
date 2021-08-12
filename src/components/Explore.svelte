@@ -71,7 +71,7 @@
         {#each xTicks as tick}
           <div class="tick" style="left: {x(tick)}%">
             <p>{tick}</p>
-            <span />
+            <span style="height: {sz}px;" />
           </div>
         {/each}
       </div>
@@ -80,7 +80,7 @@
         {#each yTicks as tick}
           <div class="tick" style="top: {y(tick)}%">
             <p>{tick}</p>
-            <span />
+            <span style="width: {sz}px;" />
           </div>
         {/each}
       </div>
@@ -145,10 +145,10 @@
   .display-team {
     position: absolute;
     max-width: 20em;
-    top: 2em;
-    left: 3em;
+    top: 2.25em;
+    left: 1.5em;
     font-size: var(--fs);
-    background-color: var(--base-gray-light);
+    background-color: var(--color-highlight);
     padding: 0.25em;
     /* transform: translate(0, 50%); */
   }
@@ -205,7 +205,7 @@
     display: block;
   }
 
-  .player:hover {
+  /* .player:hover {
     z-index: 1000;
   }
 
@@ -215,7 +215,7 @@
 
   .player:hover p {
     display: block;
-  }
+  } */
 
   .axis {
     position: absolute;
@@ -272,26 +272,27 @@
   }
 
   .axis.y .tick {
-    transform: translate(-100%, 0);
+    transform: translate(-75%, 0);
   }
 
   .axis span {
     position: absolute;
-    background: var(--base-gray-medium);
   }
 
   .axis.x span {
     top: 0;
     left: 50%;
-    height: 8px;
+    transform: translate(0, -100%);
     width: 1px;
+    border-right: 1px dashed var(--base-gray-light);
   }
 
   .axis.y span {
     top: 50%;
     right: 0;
     height: 1px;
-    width: 8px;
+    transform: translate(100%, 0);
+    border-bottom: 1px dashed var(--base-gray-light);
   }
 
   .axis .tick p {

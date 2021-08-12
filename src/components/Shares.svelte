@@ -3,6 +3,7 @@
   const { copy, teams } = getContext("App");
 
   const mates = 3;
+  const grids = d3.range(mates - 1).map((d) => ((d + 1) / mates) * 100);
   $: withShares = teams.map((t) => {
     const slice = t.players.slice(0, mates);
     const total = d3.sum(slice, (p) => p.war);
@@ -42,6 +43,9 @@
   </div>
   <figure>
     <div class="chart">
+      {#each grids as g}
+        <div class="gridline" style="left: {g}%;" />
+      {/each}
       <div class="teams">
         {#each withShares as { teamName, season, players }, rank}
           <div class="team">
@@ -58,7 +62,10 @@
                     <span
                       >{#if i === 0}#{rank + 1}{/if}
                       {p.name}</span
-                    > <span>{(p.share * 100).toFixed(0)}%</span>
+                    >
+                    <span
+                      >{(p.share * 100).toFixed(0)}% {#if i === 0 && rank === 0}WAR share of top 3{/if}</span
+                    >
                   </p>
                 </div>
               {/each}
@@ -75,6 +82,20 @@
     max-width: 60em;
     margin: 0 auto;
     font-family: var(--mono);
+  }
+
+  .chart {
+    position: relative;
+  }
+
+  .gridline {
+    position: absolute;
+    top: 0;
+    width: 1px;
+    border-right: 2px dashed var(--base-gray-medium);
+    transform: translate(-1px, 0);
+    height: 100%;
+    /* z-index: var(--z-top); */
   }
 
   .team {
@@ -118,6 +139,7 @@
   .name span:last-of-type {
     display: inline-block;
     color: var(--base-gray-light);
+    font-size: 12px;
   }
 
   .player.beta .name {

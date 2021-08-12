@@ -26,10 +26,10 @@
 	--color-placeholder: var(--base-gray-dark);
   --color-link: var(--base-off-black);
 	--color-form: var(--base-white);
-  --color-focus: var(--base-yellow);
+  --color-focus: var(--base-green);
 	--color-border: var(--base-gray-light);
-	--color-selection: var(--base-yellow);
-  --color-highlight: var(--base-yellow);
+	--color-selection: var(--base-green);
+  --color-highlight: var(--base-green);
 
 	--border-radius: 0;
 	--padding: 0.25em;
@@ -72,4 +72,8 @@ figcaption {
 	width: 100%;
 	max-width: 30em;
 	margin: 0 auto;
+}
+
+button:hover {
+	background: var(--base-gray-medium);
 }
