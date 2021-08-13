@@ -45,8 +45,8 @@
   $: sz = Math.min(figureW, $viewport.height) * 0.8;
   $: x = d3.scaleLinear().domain([0, extentX[1]]).range([0, 100]);
   $: y = d3.scaleLinear().domain(extentY).range([100, 0]);
-  $: xTicks = x.ticks();
-  $: yTicks = y.ticks();
+  $: xTicks = x.ticks(sz < 400 ? 4 : 8);
+  $: yTicks = y.ticks(sz < 400 ? 4 : 8);
   $: extentYears = d3.extent(teams, (d) => d.season);
   $: activeTeam = teams.find((d) => d.season === figureYear && d.place === figurePlace) || {};
   $: activeTeam, labelOverlap();
@@ -134,14 +134,13 @@
   .graphic {
     display: flex;
     justify-content: center;
-    --fs: 0.75em;
+    flex-direction: column;
   }
 
   .prose {
     max-width: 25em;
     width: 100%;
     flex: 1;
-    padding: 1em;
   }
 
   figure {
@@ -151,29 +150,39 @@
   }
 
   .ui {
-    padding: 0 1.5em;
     display: flex;
     align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .buttonset {
+    width: 100%;
+    margin-top: 0.5em;
+    text-align: center;
   }
 
   .range {
     flex: 1;
-    margin-right: 2em;
+    width: 100%;
+    max-width: 20em;
+    margin: 0 auto;
   }
 
   .range:before {
     content: "Season";
     display: block;
-    font-size: var(--fs);
+    font-size: var(--font-small);
     text-align: center;
   }
 
   .display-team {
+    /* max-width: 20em; */
     position: absolute;
-    max-width: 20em;
-    top: 2.25em;
-    left: 1.5em;
-    font-size: var(--fs);
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    font-size: var(--font-small);
     background-color: var(--color-highlight);
     padding: 0.25em;
   }
@@ -182,11 +191,12 @@
     margin: 0;
     text-align: center;
     line-height: 1.2;
+    white-space: nowrap;
   }
 
   .chart {
     position: relative;
-    margin: 2em auto;
+    margin: 3em auto;
     cursor: crosshair;
   }
 
@@ -206,7 +216,7 @@
   .name {
     position: absolute;
     margin: 0;
-    font-size: var(--fs);
+    font-size: var(--font-small);
     top: 0;
     left: 50%;
     transform: translate(-50%, -150%);
@@ -293,7 +303,7 @@
     top: 50%;
     left: 0;
     width: 100%;
-    transform: rotate(-90deg) translate(0, -225%);
+    transform: rotate(-90deg) translate(0, -200%);
     font-size: 12px;
   }
 
@@ -354,5 +364,47 @@
 
   :global(.prose button) {
     /* padding: 0; */
+  }
+
+  .prose p {
+    display: none;
+  }
+
+  .prose p:first-of-type {
+    display: block;
+  }
+
+  @media only screen and (min-width: 960px) {
+    .graphic {
+      flex-direction: row;
+    }
+
+    .prose p {
+      display: block;
+    }
+
+    .ui {
+      padding: 0 1.5em;
+      flex-direction: row;
+    }
+
+    .range {
+      margin-right: 2em;
+      width: auto;
+    }
+
+    .buttonset {
+      width: auto;
+    }
+
+    .chart {
+      margin: 2em auto;
+    }
+
+    .display-team {
+      top: 2em;
+      left: 1.5em;
+      transform: translate(0, 0);
+    }
   }
 </style>

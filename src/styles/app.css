@@ -33,6 +33,7 @@
 
 	--border-radius: 0;
 	--padding: 0.25em;
+	--font-small: 0.8em;
 }
 
 
@@ -40,7 +41,7 @@
 main {
 	width: 100%;
 	margin: 0 auto;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 h1, h2, h3 {
@@ -58,13 +59,18 @@ p {
 	margin: 2em 0;
 }
 
+mark {
+	font-size: var(--font-small);
+}
+
 img {
 	filter: grayscale(100%);
 	display: block;
 }
 
 figcaption {
-	font-size: 0.75em;
+	font-size: var(--font-small);
+	margin-top: 0.5em;
 }
 
 .prose {
@@ -75,4 +81,10 @@ figcaption {
 
 button:hover {
 	background: var(--base-gray-medium);
+}
+
+@media only screen and (min-width: 480px) {
+	main {
+		font-size: 18px;
+	}
 }
