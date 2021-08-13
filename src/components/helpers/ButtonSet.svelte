@@ -14,13 +14,7 @@
 </script>
 
 <div class="button-set">
-  <div
-    id={`group-${id}`}
-    class="group"
-    class:is-top={isTop}
-    role="radiogroup"
-    aria-labelledby={`label-${id}`}
-  >
+  <div id={`group-${id}`} class="group" class:is-top={isTop} role="radiogroup" aria-label="Result">
     {#if legend}<div class="legend" id="group-{id}">{legend}</div>{/if}
     <div class="options">
       {#each optionsWithSlug as option}

@@ -1,5 +1,6 @@
 <script>
   import { getContext } from "svelte";
+  import Table from "$components/Shares.Table.svelte";
   const { copy, teams } = getContext("App");
 
   const mates = 3;
@@ -27,6 +28,15 @@
       d3.descending(a.players[0].share, b.players[0].share) ||
       d3.descending(a.players[1].share, b.players[1].share)
   );
+
+  $: tableData = [].concat(...data.map((d) => d.players)).map((d) => ({
+    name: d.name,
+    place: d.place,
+    season: d.season,
+    team: d.team,
+    war: d3.format(".2f")(d.war),
+    share: d3.format(".0%")(d.share)
+  }));
 </script>
 
 <div class="graphic">
@@ -75,6 +85,8 @@
     </div>
   </figure>
 </div>
+
+<Table data={tableData} />
 
 <style>
   figure {
@@ -143,8 +155,8 @@
   }
 
   .player.alpha .name {
-    text-shadow: -1px -1px 1px var(--base-off-black), 1px 1px 1px var(--base-off-black),
-      -1px 1px 1px var(--base-off-black), 1px -1px 1px var(--base-off-black);
+    background-color: var(--base-green);
+    color: var(--base-black);
   }
 
   .name {
@@ -166,7 +178,7 @@
   .name span:last-of-type {
     display: block;
     margin-top: 0.5em;
-    color: var(--base-gray-light);
+    color: var(--base-black);
     font-size: 12px;
   }
 
@@ -195,7 +207,7 @@
   }
 
   .player:nth-of-type(1) {
-    background: var(--base-off-black);
+    background: var(--base-green);
   }
 
   .player:nth-of-type(2) {

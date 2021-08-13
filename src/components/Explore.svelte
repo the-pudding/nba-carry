@@ -130,6 +130,13 @@
   </figure>
 </div>
 
+<p class="download">
+  <a
+    href="https://github.com/fivethirtyeight/data/blob/master/nba-raptor/historical_RAPTOR_by_player.csv"
+    >Download tabular data</a
+  >
+</p>
+
 <style>
   .graphic {
     display: flex;
@@ -372,6 +379,16 @@
 
   .prose p:first-of-type {
     display: block;
+  }
+
+  p.download {
+    margin: 0;
+    text-align: center;
+  }
+
+  a {
+    font-size: 12px;
+    text-transform: uppercase;
   }
 
   @media only screen and (min-width: 960px) {

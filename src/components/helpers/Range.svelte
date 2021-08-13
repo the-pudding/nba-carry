@@ -20,7 +20,7 @@
       <span class="tick">{tick}</span>
     {/each}
   </div>
-  <input type="range" {min} {max} {step} bind:value />
+  <input aria-label="Season" type="range" {min} {max} {step} bind:value />
 </div>
 
 <style>
@@ -139,7 +139,7 @@
     text-align: center;
     width: 1px;
     background: transparent;
-    color: var(--base-gray);
+    color: var(--base-gray-dark);
     padding-top: calc(var(--thumb-width) / 2);
     position: relative;
     opacity: 0;
