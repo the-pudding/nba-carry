@@ -89,10 +89,6 @@
       </div>
     </div>
     <div class="chart" style="width: {sz}px; height: {sz}px;">
-      <div class="display-team">
-        <p>{activeTeam.season} {activeTeam.teamName}</p>
-      </div>
-
       <div class="axis x">
         {#each xTicks as tick}
           <div class="tick" style="left: {x(tick)}%">
@@ -109,6 +105,9 @@
             <span style="width: {sz}px;" />
           </div>
         {/each}
+      </div>
+      <div class="display-team">
+        <p>{activeTeam.season} {activeTeam.teamName}</p>
       </div>
       <div class="players">
         {#each teams as { players }}
@@ -275,7 +274,6 @@
     position: absolute;
     left: 0;
     top: 0;
-    z-index: var(--z-top);
     color: var(--base-gray-dark);
   }
 
