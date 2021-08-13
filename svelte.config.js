@@ -36,8 +36,8 @@ const config = {
 			]
 		},
 		paths: {
-			base: dev ? "" : "/nba-carry",
-			assets: dev ? "" : "/nba-carry",
+			base: dev ? "" : "/2021/08/nba-carry",
+			assets: dev ? "" : "/2021/08/nba-carry",
 		},
 	}
 };
