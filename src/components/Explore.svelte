@@ -57,6 +57,7 @@
     const team = t;
     const season = +s;
     figureYear = season;
+    console.log({ team, season });
     figurePlace = teams.find((d) => d.season === season && d.team === team).place;
   };
 
@@ -217,6 +218,7 @@
     background: var(--base-gray-light);
     border-radius: 50%;
     transform: translate(-50%, -50%);
+    pointer-events: none;
   }
 
   .name {
@@ -244,9 +246,10 @@
 
   .visible .dot {
     background: var(--base-black);
-    width: 0.75em;
-    height: 0.75em;
-    border: 2px solid var(--base-white);
+    width: 1em;
+    height: 1em;
+    border: 4px solid var(--base-white);
+    pointer-events: auto;
   }
 
   .visible p {
