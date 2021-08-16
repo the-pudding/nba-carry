@@ -132,13 +132,16 @@
 
   .annotation {
     max-width: 15em;
-    font-size: 12px;
+    font-size: 11px;
     position: absolute;
     top: 0;
-    left: 0;
-    transform: translate(-100%, -0.5em);
+    left: 70%;
     margin: 0;
-    display: none;
+    margin-top: 1.5em;
+  }
+
+  .annotation p {
+    margin: 0;
   }
 
   .players {
@@ -222,7 +225,7 @@
     color: var(--base-black);
   }
 
-  @media only screen and (min-width: 960px) {
+  @media only screen and (min-width: 1280px) {
     .gridline {
       display: block;
     }
@@ -265,11 +268,13 @@
     .team.top .player.alpha span:last-of-type {
       display: inline-block;
     }
-  }
 
-  @media only screen and (min-width: 1280px) {
     .annotation {
-      display: block;
+      font-size: 12px;
+      top: 0;
+      left: 0;
+      transform: translate(-100%, 1.75em);
+      margin: 0;
     }
   }
 </style>

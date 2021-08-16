@@ -62,6 +62,7 @@ p {
 mark {
 	font-size: var(--font-small);
 	padding: 0.25em;
+	background-color: var(--color-highlight);
 }
 
 img {
