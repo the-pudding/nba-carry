@@ -6,7 +6,7 @@
 <h1 class="hed">{copy.title}</h1>
 <!-- <p class="dek">{copy.dek}</p> -->
 <p class="byline">
-  By <a href="https://pudding.cool/author/russell-goldenberg">Russell Goldenberg</a>
+  By <a href="https://pudding.cool/author/russell-samora">Russell Samora</a>
   <time>August 2021</time>
 </p>
 
